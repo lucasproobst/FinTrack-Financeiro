@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+      <div class="card border-0 shadow-sm rounded-4 p-4">
+        <div class="text-center mb-4">
+          <i class="bi bi-person-circle fs-1 text-primary"></i>
+          <h4 class="mt-2">{{ user.first_name }}</h4>
+        </div>
+
+        <ul class="list-group list-group-flush mb-3">
+          <li class="list-group-item d-flex justify-content-between">
+            <span><i class="bi bi-person-fill me-2 text-secondary"></i> <strong>Usuário:</strong></span>
+            <span>{{ user.username }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span><i class="bi bi-envelope-fill me-2 text-secondary"></i> <strong>Email:</strong></span>
+            <span>{{ user.email }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span><i class="bi bi-clock-history me-2 text-secondary"></i> <strong>Último Login:</strong></span>
+            <span>{{ user.last_login|date:"d/m/Y H:i" }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span><i class="bi bi-calendar-check me-2 text-secondary"></i> <strong>Conta criada em:</strong></span>
+            <span>{{ user.date_joined|date:"d/m/Y H:i" }}</span>
+          </li>
+        </ul>
+
+        <div class="d-flex flex-column gap-2">
+          <a href="{% url 'trocar_senha_usuario' %}" class="btn btn-outline-primary w-100">
+            <i class="bi bi-key me-1"></i> Trocar Senha
+          </a>
+
+          <a href="{% url 'alterar_perfil' %}" class="btn btn-outline-warning w-100">
+            <i class="bi bi-pencil-square me-1"></i> Alterar Dados
+          </a>
+
+          <a href="{% url 'excluir_conta' %}" class="btn btn-outline-danger w-100">
+            <i class="bi bi-trash-fill me-1"></i> Excluir Conta
+          </a>
+
+          <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary w-100 mt-2">
+            <i class="bi bi-arrow-left me-1"></i> Voltar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

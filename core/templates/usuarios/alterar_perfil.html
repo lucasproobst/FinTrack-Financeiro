@@ -1,0 +1,65 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Alterar Perfil{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">
+    <i class="bi bi-person-gear me-2 text-info"></i> Alterar Perfil
+  </h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" class="card p-4 shadow-sm border-0">
+    {% csrf_token %}
+    <div class="row">
+      <div class="mb-3 col-md-6">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" name="nome"
+               value="{{ request.user.first_name }}" required>
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="email" name="email"
+               value="{{ request.user.email }}" required>
+      </div>
+    </div>
+
+    <hr class="border-secondary">
+
+    <h5 class="mt-4">
+      <i class="bi bi-shield-lock-fill me-1 text-warning"></i> Alterar Senha (opcional)
+    </h5>
+    <div class="row">
+      <div class="mb-3 col-md-4">
+        <label for="senha_atual" class="form-label">Senha Atual</label>
+        <input type="password" class="form-control" id="senha_atual"
+               name="senha_atual" placeholder="••••••••">
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="nova_senha" class="form-label">Nova Senha</label>
+        <input type="password" class="form-control" id="nova_senha"
+               name="nova_senha" placeholder="••••••••">
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="confirmar_senha" class="form-label">Confirmar Nova Senha</label>
+        <input type="password" class="form-control" id="confirmar_senha"
+               name="confirmar_senha" placeholder="••••••••">
+      </div>
+    </div>
+
+    <div class="text-end mt-3">
+      <a href="{% url 'perfil_usuario' %}" class="btn btn-outline-primary me-2">
+        <i class="bi bi-arrow-left"></i> Voltar
+      </a>
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-save-fill me-1"></i> Salvar Alterações
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+{% block title %}Gerar Relatório{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Gerar Relatório Financeiro</h2>
+
+  <form method="post" class="card p-4 shadow-sm border-0">
+    {% csrf_token %}
+    <div class="row g-3">
+      <div class="col-md-3">
+        <label for="mes" class="form-label">Mês</label>
+        <select name="mes" class="form-select" required>
+          {% for m in 1|to_range:13 %}
+            <option value="{{ m }}">{{ m }}/{{ now.year }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="ano" class="form-label">Ano</label>
+        <input type="number" name="ano" value="{{ now.year }}" class="form-control" required>
+      </div>
+      <div class="col-md-3">
+        <label for="formato" class="form-label">Formato</label>
+        <select name="formato" class="form-select" required>
+          <option value="pdf">PDF</option>
+          <option value="excel">Excel</option>
+        </select>
+      </div>
+      <div class="col-md-3 d-flex align-items-end">
+        <button class="btn btn-primary w-100">
+          <i class="bi bi-download me-1"></i> Gerar Relatório
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

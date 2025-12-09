@@ -1,0 +1,93 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+  <div class="card shadow p-4" style="width: 100%; max-width: 400px; background: rgba(20, 20, 20, 0.9); border: 1px solid rgba(255,255,255,0.1);">
+    <h2 class="text-center mb-4 text-success">
+      <i class="bi bi-person-plus-fill me-2"></i>Criar Conta
+    </h2>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <!-- Nome de Usuário -->
+      <div class="mb-3">
+        <label for="id_username" class="form-label text-light">Usuário</label>
+        <div class="input-group">
+          <span class="input-group-text bg-dark text-light border-secondary">
+            <i class="bi bi-person-fill"></i>
+          </span>
+          <input type="text" name="username" maxlength="150" autofocus required
+                 class="form-control bg-dark text-light border-secondary"
+                 placeholder="Nome de usuário" id="id_username"
+                 value="{{ form.username.value|default:'' }}">
+        </div>
+        {% if form.username.errors %}
+          <div class="text-danger small">{{ form.username.errors|striptags }}</div>
+        {% endif %}
+      </div>
+
+      <!-- E-mail -->
+      <div class="mb-3">
+        <label for="id_email" class="form-label text-light">E-mail</label>
+        <div class="input-group">
+          <span class="input-group-text bg-dark text-light border-secondary">
+            <i class="bi bi-envelope-fill"></i>
+          </span>
+          <input type="email" name="email" required
+                 class="form-control bg-dark text-light border-secondary"
+                 placeholder="E-mail" id="id_email"
+                 value="{{ form.email.value|default:'' }}">
+        </div>
+        {% if form.email.errors %}
+          <div class="text-danger small">{{ form.email.errors|striptags }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Senha -->
+      <div class="mb-3">
+        <label for="id_password1" class="form-label text-light">Senha</label>
+        <div class="input-group">
+          <span class="input-group-text bg-dark text-light border-secondary">
+            <i class="bi bi-lock-fill"></i>
+          </span>
+          <input type="password" name="password1" required
+                 class="form-control bg-dark text-light border-secondary"
+                 placeholder="Senha" id="id_password1">
+        </div>
+        <div class="form-text text-muted small">
+          Sua senha deve conter pelo menos 8 caracteres, incluindo letras e números.
+        </div>
+        {% if form.password1.errors %}
+          <div class="text-danger small">{{ form.password1.errors|striptags }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Confirmar Senha -->
+      <div class="mb-3">
+        <label for="id_password2" class="form-label text-light">Confirme a Senha</label>
+        <div class="input-group">
+          <span class="input-group-text bg-dark text-light border-secondary">
+            <i class="bi bi-lock-fill"></i>
+          </span>
+          <input type="password" name="password2" required
+                 class="form-control bg-dark text-light border-secondary"
+                 placeholder="Confirme a senha" id="id_password2">
+        </div>
+        {% if form.password2.errors %}
+          <div class="text-danger small">{{ form.password2.errors|striptags }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Botão -->
+      <button type="submit" class="btn btn-success w-100 mt-2">
+        <i class="bi bi-check-circle me-1"></i> Cadastrar
+      </button>
+    </form>
+
+    <p class="text-center mt-3 mb-0 text-light">
+      Já tem conta?
+      <a href="{% url 'login' %}" class="text-decoration-none text-success">Faça login</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

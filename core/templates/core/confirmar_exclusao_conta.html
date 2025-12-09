@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container py-5 text-center">
+  <h2 class="mb-3">Excluir Conta</h2>
+  <p>Tem certeza que deseja excluir a conta <strong>{{ conta.nome }}</strong>?</p>
+
+  <form method="post" class="d-inline-block">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">
+      <i class="bi bi-trash-fill me-1"></i> Sim, excluir
+    </button>
+    <a href="{% url 'listar_contas' %}" class="btn btn-secondary ms-2">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

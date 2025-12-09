@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container py-4">
+  <div class="card shadow-lg mx-auto" 
+       style="max-width: 500px; background: rgba(20,20,20,0.9); border: 1px solid rgba(255,255,255,0.1);">
+    
+    <div class="card-header text-white" 
+         style="background: linear-gradient(90deg, #0d6efd 0%, #003c9e 100%); border-bottom: 1px solid rgba(255,255,255,0.1);">
+      <h4 class="mb-0">
+        <i class="bi bi-bank2 me-2"></i>
+        {{ edicao|default:False|yesno:"Editar Conta,Nova Conta" }}
+      </h4>
+    </div>
+
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+
+        <!-- Nome da Conta -->
+        <div class="mb-3">
+          <label for="id_nome" class="form-label text-light">Nome da Conta</label>
+          <div class="input-group">
+            <span class="input-group-text bg-dark text-light border-secondary">
+              <i class="bi bi-wallet2"></i>
+            </span>
+            {{ form.nome|add_class:"form-control bg-dark text-light border-secondary" }}
+          </div>
+        </div>
+
+        <!-- Saldo Inicial -->
+        <div class="mb-3">
+          <label for="id_saldo_inicial" class="form-label text-light">Saldo Inicial</label>
+          <div class="input-group">
+            <span class="input-group-text bg-dark text-light border-secondary">
+              <i class="bi bi-currency-dollar"></i>
+            </span>
+            {{ form.saldo_inicial|add_class:"form-control bg-dark text-light border-secondary" }}
+          </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-between mt-4">
+          <a href="{% url 'listar_contas' %}" 
+             class="btn btn-outline-secondary border-secondary text-light">
+            <i class="bi bi-x-circle me-1"></i> Cancelar
+          </a>
+          <button type="submit" class="btn btn-success">
+            <i class="bi bi-check-circle me-1"></i> Salvar Conta
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

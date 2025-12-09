@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% block title %}Nova Categoria{% endblock %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
+          <h4 class="mb-4 d-flex align-items-center">
+            <i class="bi bi-folder-plus me-2 text-primary"></i> Nova Categoria
+          </h4>
+
+          <form method="post" class="row g-3">
+            {% csrf_token %}
+
+            <div class="col-md-6">
+              <label class="form-label" for="{{ form.nome.id_for_label }}">
+                <i class="bi bi-pencil-square me-1 text-muted"></i> {{ form.nome.label }}
+              </label>
+              {{ form.nome|add_class:"form-control" }}
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="{{ form.tipo.id_for_label }}">
+                <i class="bi bi-list-check me-1 text-muted"></i> {{ form.tipo.label }}
+              </label>
+              {{ form.tipo|add_class:"form-select" }}
+            </div>
+
+            <div class="col-md-1">
+              <label class="form-label" for="{{ form.cor.id_for_label }}">
+                <i class="bi bi-palette me-1 text-muted"></i> {{ form.cor.label }}
+              </label>
+              {{ form.cor|add_class:"form-control form-control-color" }}
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label" for="{{ form.icone.id_for_label }}">
+                <i class="bi bi-star me-1 text-muted"></i> {{ form.icone.label }}
+              </label>
+              {{ form.icone|add_class:"form-control" }}
+            </div>
+
+            <div class="col-12 mt-3 d-flex justify-content-between">
+              <a href="{% url 'listar_categorias' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Cancelar
+              </a>
+              <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-circle me-1"></i> Salvar Categoria
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+<!-- core/templates/core/lancamento_form.html -->
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h2 class="mb-4">
+  {% if edicao %}Editar Lançamento{% else %}Novo Lançamento{% endif %}
+</h2>
+
+<form method="post" enctype="multipart/form-data" class="row g-3">
+  {% csrf_token %}
+  
+  <div class="col-md-4">
+    {{ form.data.label_tag }} {{ form.data }}
+  </div>
+
+  <div class="col-md-4 d-none">
+    {{ form.tipo.label_tag }} {{ form.tipo }}
+  </div>
+
+  <div class="col-md-4">
+    {{ form.categoria.label_tag }} {{ form.categoria }}
+  </div>
+
+  <div class="col-md-6">
+    {{ form.descricao.label_tag }} {{ form.descricao }}
+  </div>
+
+  <div class="col-md-3">
+    {{ form.valor.label_tag }} {{ form.valor }}
+  </div>
+
+  <div class="col-md-3">
+    {{ form.conta.label_tag }} {{ form.conta }}
+  </div>
+
+  <div class="col-12">
+    {{ form.comprovante.label_tag }} {{ form.comprovante }}
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-success">
+      {% if edicao %}Atualizar{% else %}Salvar{% endif %}
+    </button>
+    <a href="{% url 'listar_lancamentos' %}" class="btn btn-outline-secondary">Cancelar</a>
+  </div>
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const categoriaSelect = document.getElementById("id_categoria");
+    const tipoInput = document.getElementById("id_tipo");
+
+    const categoriasTipos = {
+      {% for c in categorias %}
+        "{{ c.id }}": "{{ c.tipo }}",
+      {% endfor %}
+    };
+
+    function atualizarTipo() {
+      const categoriaId = categoriaSelect.value;
+      const tipo = categoriasTipos[categoriaId];
+      if (tipoInput) tipoInput.value = tipo;
+    }
+
+    if (categoriaSelect) {
+      categoriaSelect.addEventListener("change", atualizarTipo);
+      atualizarTipo();
+    }
+  });
+</script>
+
+{% endblock %}

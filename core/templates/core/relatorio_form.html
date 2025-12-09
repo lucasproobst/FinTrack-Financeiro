@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Gerar Relatório Financeiro</h2>
+  <form method="get" action="{% url 'gerar_relatorio' %}" target="_blank" class="d-flex align-items-end gap-2 flex-wrap">
+      <div>
+        <label for="data_inicio" class="form-label mb-1">Data Início</label>
+        <input type="date" name="data_inicio" id="data_inicio" class="form-control" required>
+      </div>
+      <div>
+        <label for="data_fim" class="form-label mb-1">Data Fim</label>
+        <input type="date" name="data_fim" id="data_fim" class="form-control" required>
+      </div>
+      <div>
+        <label class="form-label mb-1 d-block invisible">Exportar</label>
+        <div class="btn-group" role="group">
+          <button type="submit" name="formato" value="pdf" class="btn btn-outline-danger">
+            <i class="bi bi-file-earmark-pdf"></i> PDF
+          </button>
+          <button type="submit" name="formato" value="excel" class="btn btn-outline-success">
+            <i class="bi bi-file-earmark-excel"></i> Excel
+          </button>
+        </div>
+      </div>
+  </form>
+</div>
+{% endblock %}

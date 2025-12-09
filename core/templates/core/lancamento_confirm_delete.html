@@ -1,0 +1,19 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<div class="card shadow-sm border-0 mx-auto" style="max-width: 500px;">
+  <div class="card-body text-center">
+    <h4 class="mb-3 text-danger">Confirmar Exclusão</h4>
+    <p>Tem certeza que deseja excluir o lançamento <strong class="text-primary">{{ lancamento.descricao }}</strong>?</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger me-2">
+        <i class="bi bi-trash"></i> Confirmar Exclusão
+      </button>
+      <a href="{% url 'listar_lancamentos' %}" class="btn btn-outline-secondary">Cancelar</a>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

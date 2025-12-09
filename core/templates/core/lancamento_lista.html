@@ -1,0 +1,88 @@
+{% extends 'core/base.html' %}
+{% block title %}Lançamentos{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <!-- Cabeçalho com botão alinhado -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">
+      <i class="bi bi-journal-text me-2 text-info"></i> Lançamentos Financeiros
+    </h2>
+    <a href="{% url 'criar_lancamento' %}" class="btn btn-primary shadow-sm fw-semibold px-3">
+      <i class="bi bi-plus-circle me-1"></i> Novo Lançamento
+    </a>
+  </div>
+
+  {% if lancamentos %}
+    <div class="table-responsive">
+      <table class="table align-middle shadow-sm rounded-4 overflow-hidden">
+        <!-- Cabeçalho -->
+        <thead>
+          <tr>
+            <th class="fw-semibold">Data</th>
+            <th class="fw-semibold">Tipo</th>
+            <th class="fw-semibold">Categoria</th>
+            <th class="fw-semibold">Descrição</th>
+            <th class="fw-semibold">Valor</th>
+            <th class="fw-semibold">Conta</th>
+            <th class="fw-semibold text-center">Ações</th>
+          </tr>
+        </thead>
+
+        <!-- Corpo -->
+        <tbody>
+          {% for lancamento in lancamentos %}
+            <tr>
+              <td>{{ lancamento.data|date:"d/m/Y" }}</td>
+              
+              <td>
+                {% if lancamento.categoria.tipo == 'Receita' %}
+                  <span class="badge px-3 py-2"
+                        style="background: rgba(40,167,69,0.2); color: #28a745; border: 1px solid #28a745;">
+                    Receita
+                  </span>
+                {% else %}
+                  <span class="badge px-3 py-2"
+                        style="background: rgba(220,53,69,0.2); color: #dc3545; border: 1px solid #dc3545;">
+                    Despesa
+                  </span>
+                {% endif %}
+              </td>
+
+              <td>
+                <i class="{{ lancamento.categoria.icone }} me-1" style="color: {{ lancamento.categoria.cor }}"></i>
+                {{ lancamento.categoria.nome }}
+              </td>
+
+              <td>{{ lancamento.descricao }}</td>
+
+              <td class="{% if lancamento.categoria.tipo == 'Receita' %}text-success{% else %}text-danger{% endif %}">
+                R$ {{ lancamento.valor_formatado }}
+              </td>
+
+              <td>{{ lancamento.conta.nome }}</td>
+
+              <td class="text-center">
+                <a href="{% url 'editar_lancamento' lancamento.id %}" 
+                   class="btn btn-sm btn-outline-warning me-1" title="Editar">
+                  <i class="bi bi-pencil-fill"></i>
+                </a>
+                <a href="{% url 'excluir_lancamento' lancamento.id %}" 
+                   class="btn btn-sm btn-outline-danger" title="Excluir">
+                  <i class="bi bi-trash-fill"></i>
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <!-- Sem lançamentos -->
+    <div class="alert text-center fw-semibold rounded-3 shadow-sm">
+      Nenhum lançamento cadastrado até o momento.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

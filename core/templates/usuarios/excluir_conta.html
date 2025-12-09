@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Excluir Conta{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="alert alert-danger shadow-sm">
+    <h4 class="mb-2"><i class="bi bi-exclamation-triangle-fill me-2"></i> Atenção!</h4>
+    <p>Esta ação é irreversível. Todos os seus dados financeiros serão permanentemente apagados do sistema.</p>
+  </div>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" class="bg-light p-4 shadow rounded">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="senha" class="form-label">Confirme sua senha para excluir a conta:</label>
+      <input type="password" class="form-control" id="senha" name="senha" placeholder="••••••••" required>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+      <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Cancelar
+      </a>
+      <button type="submit" class="btn btn-danger">
+        <i class="bi bi-trash-fill me-1"></i> Excluir Conta
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
