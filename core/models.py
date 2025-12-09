@@ -152,6 +152,7 @@ class Lancamento(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     conta = models.ForeignKey(Conta, on_delete=models.CASCADE)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    
 
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES)
     descricao = models.CharField(max_length=255)

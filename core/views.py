@@ -227,7 +227,6 @@ def listar_lancamentos(request):
     if tipo != "todos":
         lancamentos = lancamentos.filter(tipo=tipo)
 
-
     for l in lancamentos:
         l.valor_formatado = (
             f"{l.valor:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
@@ -285,6 +284,14 @@ def excluir_lancamento(request, pk):
         return redirect("listar_lancamentos")
     return render(
         request, "core/lancamento_confirm_delete.html", {"lancamento": lancamento}
+    )
+
+
+@login_required
+def visualizar_comprovante(request, lancamento_id):
+    lancamento = get_object_or_404(Lancamento, id=lancamento_id, usuario=request.user)
+    return render(
+        request, "core/visualizar_comprovante.html", {"lancamento": lancamento}
     )
 
 
@@ -364,11 +371,9 @@ def gerar_relatorio(request):
         )
         return render(request, "core/relatorio_form.html")
 
-
     lancamentos = Lancamento.objects.filter(
         usuario=request.user, data__range=[inicio, fim]
     ).order_by("data")
-
 
     lancamentos_corrigidos = lancamentos.annotate(
         valor_corrigido=Case(
@@ -390,7 +395,7 @@ def gerar_relatorio(request):
         or 0
     )
 
-    # TOTAL DE RECEITAS (somando APENAS valor_corrigido)
+    # RECEITAS E DESPESAS
     receitas = (
         lancamentos_corrigidos.filter(tipo="Receita").aggregate(
             total=Sum("valor_corrigido")
@@ -398,7 +403,6 @@ def gerar_relatorio(request):
         or 0
     )
 
-    # TOTAL DE DESPESAS (somando valor_corrigido NEGATIVO)
     despesas = (
         lancamentos_corrigidos.filter(tipo="Despesa").aggregate(
             total=Sum("valor_corrigido")
@@ -406,7 +410,6 @@ def gerar_relatorio(request):
         or 0
     )
 
-    # SALDO FINAL
     saldo_final = saldo_inicial + receitas + despesas
 
     def fmt(v):

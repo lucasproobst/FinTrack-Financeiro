@@ -5,13 +5,12 @@
   <title>{% block title %}FinTrack{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 
-  <style>
+<style>
   body {
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
@@ -30,7 +29,6 @@
     color: #f0f0f0 !important;
   }
 
-  /* ----------------- NAVBAR ----------------- */
   .navbar {
     position: sticky;
     top: 0;
@@ -63,14 +61,23 @@
     color: #00aaff !important;
   }
 
-  /* ----------------- DROPDOWN ----------------- */
+  @media (max-width: 992px) {
+    .navbar-nav {
+      gap: 1rem !important;
+      text-align: center;
+    }
+
+    .navbar .dropdown-menu {
+      position: static !important;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+  }
+
   .navbar .dropdown-menu {
-    position: absolute;
     top: calc(100% + 0.25rem) !important;
     right: 0 !important;
     left: auto !important;
-    transform: none !important;
-    margin: 0 !important;
     min-width: 200px;
     padding: 0.5rem;
     border-radius: 10px;
@@ -90,7 +97,6 @@
     color: #00aaff !important;
   }
 
-  /* ----------------- CARDS ----------------- */
   .card {
     background: rgba(255, 255, 255, 0.05) !important;
     backdrop-filter: blur(12px);
@@ -104,7 +110,13 @@
     transform: translateY(-3px);
   }
 
-  /* ----------------- LIST-GROUP ----------------- */
+  @media (max-width: 576px) {
+    .card {
+      padding: 1rem !important;
+      margin: 0 0.5rem;
+    }
+  }
+
   .list-group-item {
     background: transparent !important;
     color: #f0f0f0 !important;
@@ -115,7 +127,6 @@
     color: #aaa !important;
   }
 
-  /* ----------------- TABELAS ----------------- */
   .table,
   .table > thead,
   .table > tbody,
@@ -136,7 +147,21 @@
     background: rgba(255, 255, 255, 0.08) !important;
   }
 
-  /* ----------------- FORMULÁRIOS ----------------- */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table {
+    min-width: 700px;
+  }
+
+  @media (max-width: 400px) {
+    .table {
+      font-size: 0.8rem;
+    }
+  }
+
   .form-control,
   .form-select {
     background: rgba(255, 255, 255, 0.05) !important;
@@ -147,14 +172,19 @@
 
   .form-select {
     appearance: none !important;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-
     background-image: url("data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmIiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiIHdpZHRoPSIxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOCAxMS4zNTdsLTMuOTItMy45MmExIDEgMCAxMSAxLjQxNC0xLjQxNEw4IDguNTc5bDIuNTA4LTIuNTA5YTEgMSAwIDExIDEuNDE0IDEuNDE0bC0zLjkyIDMuOTJhMSAxIDAgMDEtMS40MTQgMHoiLz48L3N2Zz4=");
     background-repeat: no-repeat;
     background-position: right 0.8rem center;
     background-size: 14px;
     padding-right: 2.2rem !important;
+  }
+
+  @media (max-width: 480px) {
+    .form-control,
+    .form-select {
+      font-size: 0.85rem !important;
+      padding: 0.45rem !important;
+    }
   }
 
   .form-select option {
@@ -173,7 +203,6 @@
     color: #f0f0f0 !important;
   }
 
-  /* ----------------- BOTÕES ----------------- */
   .btn-primary {
     background: #00aaff;
     border: none;
@@ -197,7 +226,13 @@
     color: #fff !important;
   }
 
-  /* ----------------- ALERTAS ----------------- */
+  @media (max-width: 480px) {
+    .btn {
+      padding: 0.55rem !important;
+      font-size: 0.85rem !important;
+    }
+  }
+
   .alert {
     border-radius: 10px;
     font-weight: 500;
@@ -206,14 +241,24 @@
     color: #ccc !important;
     backdrop-filter: blur(10px);
   }
-</style>
 
+  @media (max-width: 768px) {
+    .container {
+      padding-left: 0.7rem !important;
+      padding-right: 0.7rem !important;
+    }
+
+    h1, h2, h3 {
+      font-size: 1.35rem !important;
+    }
+  }
+</style>
 
   {% block extra_head %}{% endblock %}
 </head>
+
 <body>
 
-<!-- 🔁 Navbar dinâmica -->
 <nav class="navbar navbar-expand-lg">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
@@ -226,29 +271,33 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto d-flex align-items-center">
+
         {% if user.is_authenticated %}
+
           <li class="nav-item">
             <a class="nav-link" href="{% url 'dashboard' %}">
               <i class="bi bi-coin"></i> Visão Geral
             </a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{% url 'listar_lancamentos' %}">
               <i class="bi bi-journal-text"></i> Lançamentos
             </a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{% url 'listar_categorias' %}">
               <i class="bi bi-tags"></i> Categorias
             </a>
           </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{% url 'listar_contas' %}">
               <i class="bi bi-bank2"></i> Contas
             </a>
           </li>
 
-          <!-- Dropdown de Usuário -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle fw-semibold"
                href="#"
@@ -259,7 +308,8 @@
                aria-expanded="false">
               <i class="bi bi-person-circle fs-5"></i>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userDropdown">
+
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0">
               <li><a class="dropdown-item" href="{% url 'perfil_usuario' %}"><i class="bi bi-person me-2 text-secondary"></i> Meu Perfil</a></li>
               <li><hr class="dropdown-divider"></li>
               <li>
@@ -271,12 +321,16 @@
               </li>
             </ul>
           </li>
+
         {% else %}
+
           <li class="nav-item"><a class="nav-link" href="#funciona">Como Funciona</a></li>
           <li class="nav-item"><a class="nav-link" href="#avaliacoes">Avaliações</a></li>
           <li class="nav-item"><a href="{% url 'login' %}" class="btn btn-outline-primary"><i class="bi bi-box-arrow-in-right me-1"></i> Entrar</a></li>
           <li class="nav-item"><a href="{% url 'cadastro' %}" class="btn btn-primary"><i class="bi bi-person-plus me-1"></i> Criar Conta</a></li>
+
         {% endif %}
+
       </ul>
     </div>
   </div>
@@ -294,9 +348,8 @@
   </div>
 {% endif %}
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 {% block extra_scripts %}{% endblock %}
+
 </body>
 </html>

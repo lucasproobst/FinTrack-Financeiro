@@ -48,6 +48,7 @@ urlpatterns = [
     path('lancamento/novo/', views.criar_lancamento, name='criar_lancamento'),
     path('lancamento/<int:lancamento_id>/editar/', views.editar_lancamento, name='editar_lancamento'),
     path('lancamentos/<int:pk>/excluir/', views.excluir_lancamento, name='excluir_lancamento'),
+    path("lancamento/<int:lancamento_id>/comprovante/", views.visualizar_comprovante, name="visualizar_comprovante"),
     
     
     #Categorias
