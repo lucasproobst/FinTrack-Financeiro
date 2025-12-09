@@ -2,6 +2,11 @@ from django import forms
 from .models import Conta, Lancamento, Categoria
 from django.contrib.auth.forms import PasswordChangeForm
 
+from django.contrib.auth.forms import PasswordResetForm
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+
+
 class LancamentoForm(forms.ModelForm):
     class Meta:
         model = Lancamento
@@ -52,4 +57,22 @@ class CustomPasswordChangeForm(PasswordChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
+            field.widget.attrs.update({"class": "form-control"})
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+    def send_mail(self, subject_template_name, email_template_name,
+                  context, from_email, to_email, html_email_template_name=None):
+
+        subject = render_to_string(subject_template_name, context).strip()
+        body_text = render_to_string(email_template_name, context)
+        body_html = render_to_string(html_email_template_name, context)
+
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=body_text,
+            from_email=from_email,
+            to=[to_email]
+        )
+        email.attach_alternative(body_html, "text/html")
+        email.send()
